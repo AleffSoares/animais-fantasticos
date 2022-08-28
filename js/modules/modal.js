@@ -31,14 +31,14 @@ export default class Modal {
 
   // Adiciona os eventos aos elementos do modal
   addModalEvents() {
-    botaoAbrir.addEventListener('click', this.eventToogleModal);
-    botaoFechar.addEventListener('click', this.eventToogleModal);
-    containerModal.addEventListener('click', this.clickOutside);
+   this.botaoAbrir.addEventListener('click', this.eventToogleModal);
+   this.botaoFechar.addEventListener('click', this.eventToogleModal);
+   this.containerModal.addEventListener('click', this.clickOutside);
   }
 
   init() {
     if(this.botaoAbrir && this.botaoFechar && this.containerModal) {
-      this.addModalEvents;
+      this.addModalEvents();
     }
     return this;
   }
