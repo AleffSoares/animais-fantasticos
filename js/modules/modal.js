@@ -1,29 +1,50 @@
-export default function initModal () {
-  const botaoAbrir = document.querySelector('[data-modal="abrir"]');
-  const botaoFechar = document.querySelector('[data-modal="fechar"]');
-  const containerModal = document.querySelector('[data-modal="container"]');
+export default class Modal {
+  constructor(botaoAbrir, botaoFechar, containerModal) {
+     this.botaoAbrir = document.querySelector(botaoAbrir);
+     this.botaoFechar = document.querySelector(botaoFechar);
+     this.containerModal = document.querySelector(containerModal);
 
-  if(botaoAbrir && botaoFechar && containerModal ) {
-  
-        function toggleModal(event) {
-            event.preventDefault();
-            containerModal.classList.toggle('ativo');
-        }
-  
-       
-  
-        function clickOutside(event) {
-          event.preventDefault();
-          if(event.target === this) {
-            toggleModal(event);
-          }
-          
-        }
-        botaoAbrir.addEventListener('click', toggleModal);
-        botaoFechar.addEventListener('click', toggleModal);
-        containerModal.addEventListener('click', clickOutside)
-  
+     // bind this ao callback para fazer referencia ao objeto da classe
+
+     this.eventToogleModal = this.eventToogleModal.bind(this);
+     this.clickOutside = this.clickOutside.bind(this);
   }
+
+  // Anre ou fecha o modal
+  toggleModal() {
+    
+    this.containerModal.classList.toggle('ativo');
+  }
+
+  eventToogleModal(event) {
+    event.preventDefault();
+    this.toggleModal();
+  }
+
+  // Fecha o modal ao clicar do lado de fora
+  clickOutside(event) {
+    event.preventDefault();
+    if(event.target === this.containerModal) {
+      this.toggleModal();
+    }    
+  }
+
+  // Adiciona os eventos aos elementos do modal
+  addModalEvents() {
+    botaoAbrir.addEventListener('click', this.eventToogleModal);
+    botaoFechar.addEventListener('click', this.eventToogleModal);
+    containerModal.addEventListener('click', this.clickOutside);
+  }
+
+  init() {
+    if(this.botaoAbrir && this.botaoFechar && this.containerModal) {
+      this.addModalEvents;
+    }
+    return this;
+  }
+
+  
+  
 
 
 }
